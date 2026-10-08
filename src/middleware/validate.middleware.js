@@ -10,15 +10,22 @@ const validate = (schema) => {
       let result = schema.safeParse(body);
       console.log(result);
 
-      if (!result) {
+      if (!result.success) {
+        const errors = {};
+
+        result.error.issues.forEach((item) => {
+          errors[item.path.join(".")] = item.message;
+        });
+
+        console.log(errors);
         return resposnse.status(400).json({
           success: false,
           message: "Wrong Data Sent",
+          errors,
         });
       }
 
-      
-      next()
+      next();
     } catch (error) {
       console.log(error.message);
       return resposnse.status(500).json({
@@ -28,3 +35,5 @@ const validate = (schema) => {
     }
   };
 };
+
+export default validate;
