@@ -4,16 +4,34 @@ import Menu from "../model/menu.model.js";
 export const CreateMenu = async (request, response) => {
   try {
     const { name, description, price, category, isAvailable } = request.body;
+    const files = request.files;
 
-    const newMenu = await Menu({
-      name,
-      description,
-      price,
-      category,
-      isAvailable,
-    });
+    console.log(files);
+    let result;
+    if (files.length > 0) {
+      let filesPath = files.map((file) => {
+        return file.path;
+      });
 
-    const result = await newMenu.save();
+      result = await Menu.insertOne({
+        name,
+        description,
+        price,
+        category,
+        isAvailable,
+        images: filesPath,
+      });
+    } else {
+      result = await Menu.insertOne({
+        name,
+        description,
+        price,
+        category,
+        isAvailable,
+      });
+    }
+
+    // const result = await newMenu.save();
 
     return response.status(201).json({
       success: true,

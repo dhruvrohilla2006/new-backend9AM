@@ -11,7 +11,7 @@ export const menuSchema = z.strictObject({
     .trim()
     .min(50, "min 50 Character Required")
     .max(500, "Max 500 Character"),
-  price: z.number(),
+  price: z.coerce.number().min(10).max(1000),
   isAvaiable: z.boolean().optional(),
   category: z.string().optional(),
 });
