@@ -1,5 +1,6 @@
 import { success } from "zod";
 import Menu from "../model/menu.model.js";
+import fileUploader from "../config/cloudinary.js";
 
 export const CreateMenu = async (request, response) => {
   try {
@@ -13,13 +14,26 @@ export const CreateMenu = async (request, response) => {
         return file.path;
       });
 
+      let ImageUrls = await Promise.all(
+        filesPath.map((link) => {
+          const Uploadresult = fileUploader(link);
+
+          console.log(Uploadresult);
+          return Uploadresult;
+        }),
+      );
+
+      console.log(ImageUrls);
+
+      const SecurURLArray = ImageUrls.map((urlObj) => urlObj.secure_url);
+
       result = await Menu.insertOne({
         name,
         description,
         price,
         category,
         isAvailable,
-        images: filesPath,
+        images: SecurURLArray,
       });
     } else {
       result = await Menu.insertOne({
@@ -31,7 +45,7 @@ export const CreateMenu = async (request, response) => {
       });
     }
 
-    // const result = await newMenu.save();
+    // const result = await newMenu .save();
 
     return response.status(201).json({
       success: true,
