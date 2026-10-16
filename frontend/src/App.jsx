@@ -1,19 +1,18 @@
 import { Routes,Route } from "react-router"
-import { UserContextProvider } from "./UserContext"
-import Home from "./Home"
-import Data from "./Data"
-import Record from "./Record"
+import HomePage from "./pages/Open/HomePage"
+import Counter from "./Counter"
+
 
 
 const App = () => {
   return (
-   <UserContextProvider>
+
     <Routes>
-      <Route path="/" element={<Home/>} />
-      <Route path="/student" element={<Data />} />
-      <Route path="/data" element={ <Record/>} />
+      <Route path="/" element={<HomePage/>} />
+      <Route path="/counter" element={<Counter/>} />
+    
     </Routes>
-   </UserContextProvider>
+
   )
 }
 
