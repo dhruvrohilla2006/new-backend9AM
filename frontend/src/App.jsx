@@ -1,6 +1,7 @@
 import { Routes,Route } from "react-router"
 import HomePage from "./pages/Open/HomePage"
-import Counter from "./Counter"
+import LoginPage from "./pages/Open/LoginPage"
+import SignupPage from "./pages/Open/SignUpPage"
 
 
 
@@ -9,7 +10,8 @@ const App = () => {
 
     <Routes>
       <Route path="/" element={<HomePage/>} />
-      <Route path="/counter" element={<Counter/>} />
+      <Route path="/login" element={<LoginPage/>} /> 
+      <Route path="/register" element={<SignupPage/>} />
     
     </Routes>
 

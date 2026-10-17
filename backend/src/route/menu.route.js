@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { CreateMenu } from "../controller/menu.controller.js";
+import { CreateMenu, DeleteMenu, GetAllMenus, GetMenuById } from "../controller/menu.controller.js";
 import validate from "../middleware/validate.middleware.js";
 import { menuSchema } from "../schema/menu.Schema.js";
 import { upload } from "../libs/multer.cjs";
@@ -28,5 +28,9 @@ router.post(
   validate(menuSchema),
   CreateMenu,
 );
+
+router.get('/getAllMenu',GetAllMenus);
+router.get('/getMenu/:id',GetMenuById);
+router.delete('/deleteMenu/:id',DeleteMenu)
 
 export default router;

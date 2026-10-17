@@ -2,10 +2,14 @@ import express from "express";
 import AuthRoute from "./route/auth.route.js";
 import dbConnect from "./config/db.config.js";
 import MenuRoute from "./route/menu.route.js";
+import cors from 'cors'
 
 const app = express();
 const PORT = 3000;
-
+app.use(cors({
+  origin: 'http://localhost:5173',
+  optionsSuccessStatus: 200 
+}))
 app.use(express.json());
 
 app.use("/auth", AuthRoute);

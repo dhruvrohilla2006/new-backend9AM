@@ -61,3 +61,73 @@ export const CreateMenu = async (request, response) => {
     });
   }
 };
+
+export const GetMenuById = async (request, response) => {
+  try {
+    const { id } = request.params;
+
+    const result = await Menu.findById(id);
+
+    if (!result) {
+      return response.status(404).json({
+        success: false,
+        message: "Menu Not Found",
+      });
+    }
+
+    return response.status(200).json({
+      success: true,
+      message: "Menu Found Successfully",
+      result,
+    });
+  } catch (error) {
+    return response.status(500).json({
+      success: false,
+      message: "Error at Server",
+      error: error.message,
+    });
+  }
+};
+export const GetAllMenus = async (request, response) => {
+  try {
+    const result = await Menu.find();
+
+    return response.status(200).json({
+      success: true,
+      message: "All Menus Fetched Successfully",
+      result,
+    });
+  } catch (error) {
+    return response.status(500).json({
+      success: false,
+      message: "Error at Server",
+      error: error.message,
+    });
+  }
+};
+export const DeleteMenu = async (request, response) => {
+  try {
+    const { id } = request.params;
+
+    const result = await Menu.findByIdAndDelete(id);
+
+    if (!result) {
+      return response.status(404).json({
+        success: false,
+        message: "Menu Not Found",
+      });
+    }
+
+    return response.status(200).json({
+      success: true,
+      message: "Menu Deleted Successfully",
+      result,
+    });
+  } catch (error) {
+    return response.status(500).json({
+      success: false,
+      message: "Error at Server",
+      error: error.message,
+    });
+  }
+};
