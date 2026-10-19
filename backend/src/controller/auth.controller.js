@@ -1,4 +1,5 @@
 import { comparePass, hashPassword, validateEmail } from "../libs/authCheck.js";
+import { generateToken } from "../libs/jwt.js";
 import User from "../model/user.model.js";
 
 export const homeFunction = async (request, response) => {
@@ -45,13 +46,13 @@ export const createUser = async (request, response) => {
       });
     }
 
-    const exsistingUser = await User.findOne({email});
+    const exsistingUser = await User.findOne({ email });
 
-    if(exsistingUser){
+    if (exsistingUser) {
       return response.status(409).json({
-        success:false,
-        message:"User Already Exists"
-      })
+        success: false,
+        message: "User Already Exists",
+      });
     }
 
     const hashPass = await hashPassword(password);
@@ -111,6 +112,18 @@ export const loginController = async (request, response) => {
         message: "Invalid Credentials",
       });
     }
+
+    const JWTToken = generateToken({
+      _id: user._id,
+      role: user.role,
+    });
+
+    response.cookie("jwt", JWTToken, {
+      maxAge: 100 * 60 * 60 * 12 ,
+      httpOnly: false,
+      secure:false,
+       sameSite: "lax"
+    });
 
     return response.status(200).json({
       success: true,
