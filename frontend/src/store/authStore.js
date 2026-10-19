@@ -1,7 +1,7 @@
 import {create} from 'zustand'
 import AxiosInstan from '../libs/axios'
 
-const authStore = create((set)=>({
+const authStore = create(()=>({
     getLogin: async (email,password) => {
         try {
            
