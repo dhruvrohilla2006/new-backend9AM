@@ -5,7 +5,8 @@ export function generateToken (data) {
         {
             role:data?.role,
             id:data?._id
-        },"79085ad729948a1a7acf19918230450dc5abb3284a794d4db05d36cca0b59cf1",
+        },
+        "79085ad729948a1a7acf19918230450dc5abb3284a794d4db05d36cca0b59cf1",
         {
             "expiresIn":"12h"
         }
@@ -15,7 +16,12 @@ export function generateToken (data) {
     return token;
 }
 
+export function verifyToken (token){
 
+    const decodedToken = jwt.verify(token,"79085ad729948a1a7acf19918230450dc5abb3284a794d4db05d36cca0b59cf1")
+
+    return decodedToken;
+}
 
 
 

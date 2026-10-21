@@ -119,10 +119,10 @@ export const loginController = async (request, response) => {
     });
 
     response.cookie("jwt", JWTToken, {
-      maxAge: 100 * 60 * 60 * 12 ,
-      httpOnly: false,
-      secure:false,
-       sameSite: "lax"
+      maxAge: 100 * 60 * 60 * 12,
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax",
     });
 
     return response.status(200).json({
@@ -132,6 +132,29 @@ export const loginController = async (request, response) => {
   } catch (error) {
     console.log(error.message);
     response.json({
+      success: false,
+      message: "Error at Server",
+    });
+  }
+};
+
+export const getUserDetails = async (request, response) => {
+  try {
+    const UserId = request.token.id;
+
+    const result = await User.findById(UserId).select("-password");
+
+    console.log(result);
+
+    response.status(200).json({
+      success: true,
+      message: "Hi from get User Detail Token",
+      data: result,
+    });
+  } catch (error) {
+    console.log("Found Error", error.message);
+
+    response.status(500).json({
       success: false,
       message: "Error at Server",
     });

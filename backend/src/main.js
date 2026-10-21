@@ -3,7 +3,7 @@ import AuthRoute from "./route/auth.route.js";
 import dbConnect from "./config/db.config.js";
 import MenuRoute from "./route/menu.route.js";
 import cors from 'cors'
-
+import cookieParser from 'cookie-parser'
 const app = express();
 const PORT = 3000;
 app.use(cors({
@@ -11,6 +11,7 @@ app.use(cors({
   optionsSuccessStatus: 200 ,
      credentials: true,
 }))
+app.use(cookieParser())
 app.use(express.json());
 
 app.use("/auth", AuthRoute);
