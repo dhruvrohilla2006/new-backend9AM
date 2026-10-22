@@ -1,20 +1,23 @@
-
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import authStore from "../../store/authStore";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const {getLogin} = authStore();
+  const { getLogin } = authStore();
 
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    getLogin(email,password);
-    console.log("Email:", email);
-    console.log("Password:", password);
+    const result = await getLogin(email, password);
+
+    if (result.success) {
+      navigate("/user");
+    }
+    // console.log("Email:", email);
+    // console.log("Password:", password);
 
     // Connect your login API here
   };
@@ -22,20 +25,14 @@ const LoginPage = () => {
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100 px-4">
       <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-xl">
-
         {/* Heading */}
         <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold text-gray-800">
-            Welcome Back
-          </h1>
-          <p className="mt-2 text-gray-500">
-            Login to your account
-          </p>
+          <h1 className="text-3xl font-bold text-gray-800">Welcome Back</h1>
+          <p className="mt-2 text-gray-500">Login to your account</p>
         </div>
 
         {/* Login Form */}
         <form onSubmit={handleSubmit} className="space-y-5">
-
           {/* Email */}
           <div>
             <label
@@ -115,7 +112,6 @@ const LoginPage = () => {
             Sign up
           </Link>
         </p>
-
       </div>
     </div>
   );
