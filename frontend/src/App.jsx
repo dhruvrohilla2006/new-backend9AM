@@ -2,8 +2,10 @@ import { Routes, Route } from "react-router";
 import HomePage from "./pages/Open/HomePage";
 import LoginPage from "./pages/Open/LoginPage";
 import SignupPage from "./pages/Open/SignUpPage";
-import UserLayout from "./pages/User/Layout";
-import Menu from "./pages/User/Menu";
+// import UserLayout from "./pages/User/Layout";
+// import Menu from "./pages/User/Menu";
+// import AdminLayout from "./pages/Admin/Layout";
+import LayoutCheck from "./components/LayoutCheck";
 
 const App = () => {
   return (
@@ -14,12 +16,7 @@ const App = () => {
         <Route path="/register" element={<SignupPage />} />
       </Routes>
 
-      <UserLayout>
-        <Routes>
-          <Route path="/user" element={<Menu />} />
-          <Route path="/dhruv" element={<h1>Hi Dhruv</h1>} />
-        </Routes>
-      </UserLayout>
+      <LayoutCheck />
     </>
   );
 };

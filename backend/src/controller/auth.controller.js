@@ -128,6 +128,7 @@ export const loginController = async (request, response) => {
     return response.status(200).json({
       success: true,
       message: "You are logged in Sucessfulyy",
+      role: user.role,
     });
   } catch (error) {
     console.log(error.message);

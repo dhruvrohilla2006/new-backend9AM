@@ -11,7 +11,7 @@ const menuStore = create((set) => ({
         set(() => ({
           menuData: data.result,
         }));
-        return <data value="" className="result"></data>
+        // return <data value="" className="result"></data>
       }
     } catch (error) {
       console.log(error);

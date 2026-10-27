@@ -1,10 +1,11 @@
 import { create } from "zustand";
 import AxiosInstan from "../libs/axios";
 
-const authStore = create(() => ({
+const authStore = create((set) => ({
+  userDetails: {},
   getLogin: async (email, password) => {
     try {
-      const {data} = await AxiosInstan.post("/auth/login", {
+      const { data } = await AxiosInstan.post("/auth/login", {
         email,
         password,
       });
@@ -18,7 +19,9 @@ const authStore = create(() => ({
     try {
       const { data } = await AxiosInstan.get("/auth/check");
 
+      set(() => ({ userDetails: data.data }));
       console.log(data);
+      return data;
     } catch (error) {
       console.log("Error", error);
       // alert('Something Went Wrong')

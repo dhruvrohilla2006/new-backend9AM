@@ -1,7 +1,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import FoodCard from "../../components/FoodCard";
-import menuStore from "../../store/menuStore";
+import menuStore from "../../store/menuStore.js";
 
 const Menu = () => {
   const { menuData, getAllMenu } = menuStore();

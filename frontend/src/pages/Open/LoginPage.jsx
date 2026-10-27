@@ -14,7 +14,11 @@ const LoginPage = () => {
     const result = await getLogin(email, password);
 
     if (result.success) {
-      navigate("/user");
+      if (result.role == "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/user");
+      }
     }
     // console.log("Email:", email);
     // console.log("Password:", password);
