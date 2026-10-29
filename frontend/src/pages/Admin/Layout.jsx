@@ -10,7 +10,7 @@ const AdminLayout = ({ children }) => {
     { name: "Home", path: "/" },
     { name: "Profile", path: "/profile" },
     { name: "Settings", path: "/settings" },
-    { name: "Menus", path: "/menus" },
+    { name: "Menus", path: "/admin/create" },
   ];
 
   useEffect(() => {

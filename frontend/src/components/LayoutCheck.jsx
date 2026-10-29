@@ -4,7 +4,9 @@ import authStore from "../store/authStore";
 
 import UserLayout from "../pages/User/Layout";
 import Menu from "../pages/User/Menu";
+import AdminMenu from "../pages/Admin/AllMenu";
 import AdminLayout from "../pages/Admin/Layout";
+import CreateMenu from "../pages/Admin/CreateMenu";
 
 const LayoutCheck = () => {
   const { checkLogin } = authStore();
@@ -15,6 +17,7 @@ const LayoutCheck = () => {
     const verifyLogin = async () => {
       try {
         const value = await checkLogin();
+        console.log(value);
         setRole(value.data.role);
       } catch (err) {
         console.error(err);
@@ -40,6 +43,8 @@ const LayoutCheck = () => {
         <AdminLayout>
           <Routes>
             <Route path="/admin" element={<h1>Hi From Admin</h1>} />
+            <Route path="/admin/create" element={<CreateMenu />} />
+            <Route path="/admin/all" element={<AdminMenu />} />
           </Routes>
         </AdminLayout>
       );
