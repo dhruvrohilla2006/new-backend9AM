@@ -4,6 +4,7 @@ import dbConnect from "./config/db.config.js";
 import MenuRoute from "./route/menu.route.js";
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
+import OrderRouter from "./route/order.route.js";
 const app = express();
 const PORT = 3000;
 app.use(cors({
@@ -16,7 +17,7 @@ app.use(express.json());
 
 app.use("/auth", AuthRoute);
 app.use("/menu", MenuRoute);
-
+app.use('/order',OrderRouter)
 app.get("/", async (request, response) => {
   response.json({
     success: true,

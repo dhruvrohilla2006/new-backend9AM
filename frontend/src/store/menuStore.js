@@ -37,14 +37,14 @@ const menuStore = create((set) => ({
   },
   deleteFood: async (foodId) => {
     try {
-       const confirmed = window.confirm(
-      `Are you sure you want to delete ?`,
-    );
+      const confirmed = window.confirm(`Are you sure you want to delete ?`);
 
-    if (!confirmed) return;
+      if (!confirmed) return;
       const { data } = await AxiosInstan.delete(`/menu/deleteMenu/${foodId}`);
       if (data.success) {
-        set((state) => ({ menuData:  state.menuData.filter((item)=>item._id != foodId) }));
+        set((state) => ({
+          menuData: state.menuData.filter((item) => item._id != foodId),
+        }));
         return { success: true };
       }
       return { success: false, message: data.message };
