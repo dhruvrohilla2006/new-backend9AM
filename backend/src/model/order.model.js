@@ -19,7 +19,7 @@ const orderSchema = new mongoose.Schema({
     },
   ],
   userId:{
-    type:mongoose.Schema.types.ObjectId,
+    type:mongoose.Schema.Types.ObjectId,
     required:true,
     ref:'user'
   },
@@ -40,3 +40,9 @@ const orderSchema = new mongoose.Schema({
       default:'pending'
   }
 });
+
+
+
+const Order = mongoose.model("order",orderSchema)
+
+export default Order;
