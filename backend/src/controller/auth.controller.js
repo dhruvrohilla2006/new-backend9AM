@@ -102,8 +102,16 @@ export const loginController = async (request, response) => {
       password: "",
     };
 
+    console.log(email,password)
     const user = await User.findOne({ email });
 
+
+    if(!user){
+      return response.status(404).json({
+        message:"User Don't Exist or Wrong Credentials",
+        success:false
+      })
+    }
     // console.log(user);
 
     if (!comparePass(password, user.password)) {
@@ -132,6 +140,7 @@ export const loginController = async (request, response) => {
     });
   } catch (error) {
     console.log(error.message);
+    console.log(error.stack);
     response.json({
       success: false,
       message: "Error at Server",

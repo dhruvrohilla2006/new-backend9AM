@@ -10,39 +10,37 @@ const orderSchema = new mongoose.Schema({
       item_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "menu",
-        required:true,
+        required: true,
       },
-      quantity:{
-        type:Number,
-        required:true
-      }
+      quantity: {
+        type: Number,
+        required: true,
+      },
     },
   ],
-  userId:{
-    type:mongoose.Schema.Types.ObjectId,
-    required:true,
-    ref:'user'
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "user",
   },
-  status:{
-    type:String,
-    enums:{
-        values: [
-          'pending',
-          'accepted',
-          'preparing',
-          'out-for-delivery',
-          'delivered',
-          'cancelled',
-          'rejected',
-        ],
-        message: '{VALUE} is not a valid order status',
-      },
-      default:'pending'
-  }
+  status: {
+    type: String,
+    enum: {
+      values: [
+        "pending",
+        "accepted",
+        "preparing",
+        "out-for-delivery",
+        "delivered",
+        "cancelled",
+        "rejected",
+      ],
+      message: "{VALUE} is not a valid order status",
+    },
+    default: "pending",
+  },
 });
 
-
-
-const Order = mongoose.model("order",orderSchema)
+const Order = mongoose.model("order", orderSchema);
 
 export default Order;
