@@ -1,5 +1,5 @@
 
-const FoodCard = ({ food }) => {
+const FoodCard = ({ food,onClick }) => {
   const {
     name,
     description,
@@ -62,6 +62,7 @@ const FoodCard = ({ food }) => {
           <button
             type="button"
             disabled={!isAvailable}
+            onClick={onClick}
             className={`w-full rounded-xl px-4 py-2.5 text-sm font-semibold transition ${
               isAvailable
                 ? "bg-orange-500 text-white hover:bg-orange-600 active:scale-[0.98]"

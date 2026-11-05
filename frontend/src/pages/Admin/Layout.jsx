@@ -1,17 +1,26 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import authStore from "../../store/authStore";
 
 const AdminLayout = ({ children }) => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { checkLogin } = authStore();
+  const { checkLogin, logout } = authStore();
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "Profile", path: "/profile" },
     { name: "Settings", path: "/settings" },
     { name: "Menus", path: "/admin/create" },
   ];
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    const result = await logout();
+
+    if (result) {
+      return navigate("/");
+    }
+  };
 
   useEffect(() => {
     checkLogin();
@@ -41,6 +50,7 @@ const AdminLayout = ({ children }) => {
 
             <button
               type="button"
+              onClick={handleLogout}
               className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700"
             >
               Logout

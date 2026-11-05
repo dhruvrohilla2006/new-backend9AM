@@ -2,9 +2,11 @@
 import { useEffect, useMemo, useState } from "react";
 import FoodCard from "../../components/FoodCard";
 import menuStore from "../../store/menuStore.js";
+import cartStore from "../../store/cartStore.js";
 
 const Menu = () => {
   const { menuData, getAllMenu } = menuStore();
+  const {AddItemToCart} = cartStore
 
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("ALL");
@@ -125,7 +127,7 @@ const Menu = () => {
       {filteredFoods.length > 0 ? (
         <section className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {filteredFoods.map((food) => (
-            <FoodCard key={food._id} food={food} />
+            <FoodCard key={food._id} food={food} onClick={} />
           ))}
         </section>
       ) : (

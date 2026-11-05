@@ -1,3 +1,4 @@
+import { response } from "express";
 import { comparePass, hashPassword, validateEmail } from "../libs/authCheck.js";
 import { generateToken } from "../libs/jwt.js";
 import User from "../model/user.model.js";
@@ -102,15 +103,14 @@ export const loginController = async (request, response) => {
       password: "",
     };
 
-    console.log(email,password)
+    console.log(email, password);
     const user = await User.findOne({ email });
 
-
-    if(!user){
+    if (!user) {
       return response.status(404).json({
-        message:"User Don't Exist or Wrong Credentials",
-        success:false
-      })
+        message: "User Don't Exist or Wrong Credentials",
+        success: false,
+      });
     }
     // console.log(user);
 
@@ -169,4 +169,13 @@ export const getUserDetails = async (request, response) => {
       message: "Error at Server",
     });
   }
+};
+
+export const logoutController = async (request, response) => {
+  response.clearCookie("jwt");
+
+  response.status(200).json({
+    message: "Logout Successfuly",
+    success: true,
+  });
 };
