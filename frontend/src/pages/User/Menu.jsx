@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import FoodCard from "../../components/FoodCard";
 import menuStore from "../../store/menuStore.js";
 import cartStore from "../../store/cartStore.js";
+// hi
 
 const Menu = () => {
   const { menuData, getAllMenu } = menuStore();
