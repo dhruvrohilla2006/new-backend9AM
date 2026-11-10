@@ -3,13 +3,15 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import authStore from "../../store/authStore";
 import FloatingCart from "../../components/ShoppingCart";
+import cartStore from "../../store/cartStore";
 
 const UserLayout = ({ children }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const { checkLogin, logout } = authStore();
+  const { cartCount } = cartStore();
   const navLinks = [
-    { name: "Home", path: "/" },
-    { name: "Profile", path: "/profile" },
+    { name: "Home", path: "/user" },
+    { name: "Cart", path: "/cart" },
     { name: "Settings", path: "/settings" },
     { name: "Menus", path: "/menus" },
   ];
@@ -106,7 +108,7 @@ const UserLayout = ({ children }) => {
       <main className="mx-auto w-full max-w-7xl min-w-0 p-4 sm:p-6 lg:p-8">
         {children}
       </main>
-      <FloatingCart  />
+      <FloatingCart count={cartCount} onClick={() => navigate("/cart")} />
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import cartStore from "../stores/cartStore";
+import cartStore from "../store/cartStore";
 
 const CartItem = ({ item }) => {
   const increaseQuantity = cartStore((state) => state.increaseQuantity);
@@ -9,7 +9,7 @@ const CartItem = ({ item }) => {
     <div className="flex items-center gap-4 border-b py-4">
       {/* Image */}
       <img
-        src={item.image.url}
+        src={item.image}
         alt={item.name}
         className="h-24 w-24 rounded-lg object-cover"
       />

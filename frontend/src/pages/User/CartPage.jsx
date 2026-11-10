@@ -1,13 +1,15 @@
-cartStore
+cartStore;
 
 import { ShoppingCart } from "lucide-react";
 import orderStore from "../../store/orderStore";
 import cartStore from "../../store/cartStore";
+import CartItem from "../../components/CartItem";
 
 const CartPage = () => {
   const ResetCart = cartStore((state) => state.ResetCart);
   const cart = cartStore((state) => state.cart);
   const cartCount = cartStore((state) => state.cartCount);
+  const createOrder = cartStore((state) => state.createOrder);
   const { checkoutLoading, createOrderUser } = orderStore();
 
   confirm;
@@ -34,7 +36,7 @@ const CartPage = () => {
         {/* Cart Items */}
         <div className="rounded-xl border p-4">
           {cart.map((item) => (
-            <lucide-react key={item._id} item={item} />
+            <CartItem key={item._id} item={item} />
           ))}
         </div>
 
@@ -60,7 +62,7 @@ const CartPage = () => {
           </div>
 
           <button
-            onClick={() => createOrderUser(cart).then(ResetCart())}
+            onClick={() => createOrder()}
             className="w-full rounded-lg bg-black py-3 font-semibold text-white"
           >
             {checkoutLoading ? "Proccessing ..." : "Proceed to Checkout"}

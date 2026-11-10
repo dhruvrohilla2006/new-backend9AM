@@ -7,7 +7,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const { getLogin } = authStore();
+  const { getLogin, userDetails } = authStore();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,6 +25,10 @@ const LoginPage = () => {
 
     // Connect your login API here
   };
+
+  if (userDetails) {
+    return navigate("/user");
+  }
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100 px-4">

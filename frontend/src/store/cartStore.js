@@ -1,18 +1,18 @@
 import { toast } from "react-hot-toast";
 import { create } from "zustand";
+import AxiosInstan from "../libs/axios";
 
-
-const cartStore = create((set) => ({
+const cartStore = create((set, get) => ({
   cart: [],
   cartCount: 0,
-  
+
   AddItemToCart: (food) => {
-    console.log(food);
+    console.log("Food Item", food);
     set((state) => {
       let existingItem = state.cart.find((item) => item._id === food._id);
       if (existingItem) {
         console.log(state);
-        toast.success("Item Added to Cart Successfully")
+        // toast.success("Item Added to Cart Successfully")
         return {
           cartCount: state.cartCount + 1,
           cart: state.cart.map((item) => {
@@ -23,7 +23,7 @@ const cartStore = create((set) => ({
         };
       }
       console.log(state);
-      toast.success("Item Added to Cart Successfully")
+      toast.success("Item Added to Cart Successfully");
       return {
         cartCount: state.cartCount + 1,
         cart: [
@@ -32,7 +32,7 @@ const cartStore = create((set) => ({
             _id: food._id,
             name: food.name,
             price: food.price,
-            image: food.image,
+            image: food.images[0],
             quantity: 1,
           },
         ],
@@ -62,7 +62,7 @@ const cartStore = create((set) => ({
 
       // Don't allow quantity below 1
       if (item.quantity === 1) {
-        return state;
+        return { cart: state.cart.filter((item) => item._id != id) };
       }
 
       return {
@@ -82,7 +82,17 @@ const cartStore = create((set) => ({
   ResetCart: async () => {
     set({ cart: [] });
   },
-  
+  createOrder: async () => {
+    const orderData = get().cart.map((item) => {
+      return { item_id: item._id, quantity: item.quantity };
+    });
+
+    const { data } = await AxiosInstan.post("/order", {
+      cartItem: orderData,
+    });
+    console.log(data);
+    console.log(orderData);
+  },
 }));
 
 export default cartStore;
