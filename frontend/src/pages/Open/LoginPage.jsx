@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import authStore from "../../store/authStore";
 
@@ -7,7 +7,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const { getLogin, userDetails } = authStore();
+  const { getLogin, userDetails, checkLogin } = authStore();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,9 +26,17 @@ const LoginPage = () => {
     // Connect your login API here
   };
 
-  if (userDetails) {
-    return navigate("/user");
-  }
+  useEffect(() => {
+    (async function () {
+      const details = await checkLogin();
+      console.log(details);
+      if (details.role == "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/user");
+      }
+    })();
+  }, [userDetails]);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100 px-4">

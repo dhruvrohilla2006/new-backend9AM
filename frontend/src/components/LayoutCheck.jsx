@@ -8,6 +8,7 @@ import AdminMenu from "../pages/Admin/AllMenu";
 import AdminLayout from "../pages/Admin/Layout";
 import CreateMenu from "../pages/Admin/CreateMenu";
 import CartPage from "../pages/User/CartPage";
+import Order from "../pages/Admin/Order";
 
 const LayoutCheck = () => {
   const userDetails = authStore((s) => s.userDetails);
@@ -28,7 +29,7 @@ const LayoutCheck = () => {
       <UserLayout>
         <Routes>
           <Route path="/user" element={<Menu />} />
-          <Route path='/cart' element={<CartPage/>} />
+          <Route path="/cart" element={<CartPage />} />
           <Route path="/dhruv" element={<h1>Hi Dhruv</h1>} />
         </Routes>
       </UserLayout>
@@ -42,6 +43,7 @@ const LayoutCheck = () => {
           <Route path="/admin" element={<h1>Hi From Admin</h1>} />
           <Route path="/admin/create" element={<CreateMenu />} />
           <Route path="/admin/all" element={<AdminMenu />} />
+          <Route path="/admin/order" element={<Order />} />
         </Routes>
       </AdminLayout>
     );

@@ -8,9 +8,9 @@ const AdminLayout = ({ children }) => {
   const { checkLogin, logout } = authStore();
   const navLinks = [
     { name: "Home", path: "/" },
-    { name: "Profile", path: "/profile" },
-    { name: "Settings", path: "/settings" },
-    { name: "Menus", path: "/admin/create" },
+    { name: "All Menus", path: "/admin/all" },
+    { name: "Orders", path: "/admin/order" },
+    { name: "Create Menu", path: "/admin/create" },
   ];
   const navigate = useNavigate();
 

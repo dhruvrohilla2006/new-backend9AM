@@ -13,7 +13,7 @@ const authStore = create((set) => ({
       });
 
       if (data.success) {
-        set({ userDetails: data.data });
+        set({ userDetails: data.user });
       }
       return data;
     } catch (error) {
@@ -27,20 +27,20 @@ const authStore = create((set) => ({
     try {
       const { data } = await AxiosInstan.get("/auth/check");
       set({ userDetails: data.data, authLoading: false });
-      return data;
+      return data.data;
     } catch (error) {
       set({ userDetails: null, authLoading: false });
-      console.log(error)
+      console.log(error);
     }
   },
   logout: async () => {
     try {
-      const { data} = await AxiosInstan.get("/auth/logout");
+      const { data } = await AxiosInstan.get("/auth/logout");
       set({ userDetails: null, authLoading: false });
       return data.success;
     } catch (error) {
       set({ userDetails: null, authLoading: false });
-      console.log(error)
+      console.log(error);
     }
   },
 }));

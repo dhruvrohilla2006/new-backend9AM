@@ -137,6 +137,12 @@ export const loginController = async (request, response) => {
       success: true,
       message: "You are logged in Sucessfulyy",
       role: user.role,
+      user:{
+        _id:user._id,
+        name:user.name,
+        role:user.role,
+        email:user.email
+      }
     });
   } catch (error) {
     console.log(error.message);
