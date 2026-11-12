@@ -13,6 +13,17 @@ const orderStore = create((set) => ({
       console.log("found Error", error);
     }
   },
+  updateOrderStatus: async (OrderId, NewStatus) => {
+    try {
+      const { data } = await AxiosInstan.put(
+        `/order/${OrderId}?status=${NewStatus}`,
+      );
+
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  },
 }));
 
 export default orderStore;

@@ -3,8 +3,36 @@ import orderStore from "../../store/orderStore";
 
 import React, { useState } from "react";
 
-export function OrderTable({ orders }) {
+const ORDER_STATUSES = [
+  { value: "pending", label: "Pending" },
+  { value: "accepted", label: "Accepted" },
+  { value: "preparing", label: "Preparing" },
+  { value: "out-for-delivery", label: "Out for Delivery" },
+  { value: "delivered", label: "Delivered" },
+  { value: "cancelled", label: "Cancelled" },
+  { value: "rejected", label: "Rejected" },
+];
+
+export function OrderTable({ orders, onStatusChange }) {
   const [expandedRows, setExpandedRows] = useState({});
+  const [updatingId, setUpdatingId] = useState(null);
+  const { getOrdersAdmin } = orderStore();
+  const handleStatusChange = async (e, orderId, currentStatus) => {
+    e.stopPropagation(); // don't toggle the row
+    const newStatus = e.target.value;
+    if (newStatus === currentStatus) return;
+
+    try {
+      setUpdatingId(orderId);
+      await onStatusChange(orderId, newStatus);
+      
+    } catch (err) {
+      console.error("Failed to update status:", err);
+      alert("Could not update order status");
+    } finally {
+      setUpdatingId(null);
+    }
+  };
 
   const toggleRow = (orderId) => {
     setExpandedRows((prev) => ({
@@ -43,6 +71,14 @@ export function OrderTable({ orders }) {
       </span>
     );
   };
+
+  useEffect(() => {
+    (async function () {
+      const result = await getOrdersAdmin();
+
+      console.log(result);
+    })();
+  }, [updatingId]);
 
   return (
     <div style={{ width: "100%", overflowX: "auto", fontFamily: "sans-serif" }}>
@@ -109,6 +145,22 @@ export function OrderTable({ orders }) {
                   </td>
                   <td style={{ padding: "12px 16px" }}>
                     {getStatusBadge(order.status)}
+                    <select
+                      name="status"
+                      value={order.status}
+                      disabled={updatingId === order._id}
+                      onClick={(e) => e.stopPropagation()}
+                      onChange={(e) =>
+                        handleStatusChange(e, order._id, order.status)
+                      }
+                      style={{ marginLeft: "8px", padding: "4px 6px" }}
+                    >
+                      {ORDER_STATUSES.map((s) => (
+                        <option key={s.value} value={s.value}>
+                          {s.label}
+                        </option>
+                      ))}
+                    </select>
                   </td>
                 </tr>
 
@@ -253,7 +305,7 @@ export function OrderTable({ orders }) {
 }
 
 const Order = () => {
-  const { getOrdersAdmin, orderData } = orderStore();
+  const { getOrdersAdmin, orderData, updateOrderStatus } = orderStore();
   useEffect(() => {
     (async function () {
       const result = await getOrdersAdmin();
@@ -267,7 +319,7 @@ const Order = () => {
       <p className="text-sm font-semibold uppercase tracking-widest text-orange-500">
         Fresh & Delicious
       </p>
-      <OrderTable orders={orderData} />
+      <OrderTable orders={orderData} onStatusChange={updateOrderStatus} />
     </div>
   );
 };
